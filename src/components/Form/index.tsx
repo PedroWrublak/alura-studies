@@ -1,11 +1,24 @@
 import React from 'react';
 import Botao from '../Button'
 import style from './Form.module.scss';
+import { Itask } from '../../types/task';
 
-class Form extends React.Component {
+class Form extends React.Component<{
+    setTasks: React.Dispatch<React.SetStateAction<Itask[]>>
+}> {
+    state = {
+        task: "",
+        time: "00:00"
+    }
+
+    addTask(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        this.props.setTasks(oldTasks => [...oldTasks, { ...this.state }]);
+    }
+
     render() {
         return (
-            <form className={style.novaTarefa}>
+            <form className={style.novaTarefa} onSubmit={this.addTask.bind(this)}>
                 <div className={style.inputContainer}>
                     <label htmlFor='task'>
                         Adicione um novo estudo
@@ -14,6 +27,8 @@ class Form extends React.Component {
                         type='text'
                         name='task'
                         id='task'
+                        value={this.state.task}
+                        onChange={event => this.setState({...this.state, task: event.target.value})}
                         placeholder='O que você quer estudar?'
                         required
                     />
@@ -26,6 +41,8 @@ class Form extends React.Component {
                         type='time'
                         step='1'
                         name='time'
+                        value={this.state.time}
+                        onChange={event => this.setState({...this.state, time: event.target.value })}
                         id='time'
                         min='00:00:00'
                         max='01:30:00'

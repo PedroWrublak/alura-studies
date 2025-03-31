@@ -7,6 +7,7 @@ interface ButtonProps {
 
 class Button extends React.Component<ButtonProps> {
     render() {
+        // const { type = "button" } = this.props
         return (
             <button className={style.botao}>
                 {this.props.children}
