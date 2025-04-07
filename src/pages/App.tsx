@@ -11,6 +11,10 @@ function App() {
 
   function selectTask(selectedTask: Itask) {
     setSelected(selectedTask);
+    setTasks(previousTask => previousTask.map(task => ({
+      ...task,
+      selected: task.id === selectedTask.id ? true : false
+    })));
   }
 
   return (
@@ -20,7 +24,7 @@ function App() {
        tasks={tasks}
        selectTask={selectTask}
        />
-      <StopWatch />
+      <StopWatch selected={selected}/>
     </div>
   );
 }
